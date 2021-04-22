@@ -139,6 +139,4 @@ if __name__=='__main__':
     print("Radon Transform: ", out.shape)
 
     plt.imshow(out.cpu())
-    plt.savefig('Output.png')
-    plt.imshow(ld_sinogram.cpu())
-    plt.savefig('ld_sinogram.png')
+    plt.savefig('output.png')
