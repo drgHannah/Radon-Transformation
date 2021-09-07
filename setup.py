@@ -7,10 +7,8 @@ setup(
     author='Hannah Droege',
     license='MIT License',
     packages=['radon_transformation'],
-    install_requires=['torch==1.9.0+cu111',
-                      'torchvision==0.10.0+cu111',
-                      'numpy', 
-                      'scipy',   
+    install_requires=[
+                      'numpy',    
                       'scikit-image',                 
                       ],
 
