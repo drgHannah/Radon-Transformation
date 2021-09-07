@@ -40,7 +40,7 @@ class radon(torch.nn.Module):
         out = torch.rot90(out, 2)
 
         out = out.view(out.shape[0],1, n_angles, n_count)
-        return out.permute(0,1,3,2)
+        return out#.permute(0,1,3,2)
 
     def intensity_from_rays(self,sample_points, img, device):
         '''
@@ -151,6 +151,7 @@ class fbp(torch.nn.Module):
 
     def forward(self, input):
 
+        input=input.permute(0,1,3,2)
         bsz, _, det_count, _ = input.shape
         input = input.double()
 
