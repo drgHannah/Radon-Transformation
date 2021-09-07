@@ -2,7 +2,7 @@
 
 ## Install
 Clone repository and then:
-    pip install .
+	pip install .
 
 ## Usage
 ```
