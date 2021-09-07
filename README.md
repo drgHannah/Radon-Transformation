@@ -2,7 +2,8 @@
 
 ## Install
 - clone repository
-- install pytorch: https://pytorch.org/get-started/locally/ 
+- install pytorch: https://pytorch.org/get-started/locally/
+- 
 	```
 	pip install ./radon_transformation/
 	```
