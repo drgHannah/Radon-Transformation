@@ -1,14 +1,12 @@
 # Radon Transformation
 
-### Create Conda Environment
-    conda create -n radon_env python=3.6
-    conda activate radon_env
+## Install
+Clone repository and then:
+    pip install .
 
-### Installation
- Astra and Dival needed for the lodopab dataset.
-
-    conda install -c astra-toolbox astra-toolbox 
-    pip install dival
-    conda install -c pytorch pytorch
-    conda install -c conda-forge matplotlib
-
+## Usage
+```
+radon_op, fbp_op = get_operators(n_angles=200, det_count=500, image_size=400, device='cuda')
+sino = radon_op(input) 						 # input size: bsz x 1 x image_size x image_size
+reconstructed = fbp_op(sino)
+```
