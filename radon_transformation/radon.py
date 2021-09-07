@@ -115,12 +115,14 @@ class fbp(torch.nn.Module):
     ''' 
     Filtered Backprojection
     '''
-    def __init__(self, n_angles=1000, det_count=400, image_size=400, device="cuda"):
+    def __init__(self, n_angles=1000, det_count=400, image_size=400, circle = True, device="cuda"):
         super().__init__()
         self.image_size=image_size
         self.step_size = image_size/det_count
         self.det_count = det_count
         self.n_angles = n_angles
+        self.circle=circle
+
         
 
         # padding values
@@ -145,6 +147,9 @@ class fbp(torch.nn.Module):
         y = torch.ones_like(tgrid) * torch.linspace(-1,1,n_angles)[:,None,None,None]
 
         self.grid = torch.cat((y,tgrid),dim=-1).view(self.n_angles * self.image_size, self.image_size, 2)[None].to(device)
+
+        self.reconstruction_circle = (grid_x ** 2 + grid_y ** 2) <= 1
+
         
 
 
@@ -167,6 +172,12 @@ class fbp(torch.nn.Module):
         reconstructed = torch.nn.functional.grid_sample(radon_filtered, grid, mode="bilinear", padding_mode='zeros', align_corners=True)
         reconstructed = reconstructed.view(bsz, self.n_angles, 1, self.image_size, self.image_size).sum(1)
         reconstructed = reconstructed/self.step_size
+
+        # circle
+        if self.circle:
+            reconstructed_circle = self.reconstruction_circle.repeat(bsz,1,1,1).double()
+            reconstructed[reconstructed_circle==0] = 0.
+
         return reconstructed  * np.pi / (2 * self.n_angles)
 
 def get_operators(n_angles=380, det_count=500, image_size=400, device='cuda'):
