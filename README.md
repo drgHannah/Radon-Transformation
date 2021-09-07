@@ -2,8 +2,8 @@
 
 ## Install
 Clone repository and then:
-	pip install .
 
+	pip install .
 ## Usage
 ```
 radon_op, fbp_op = get_operators(n_angles=200, det_count=500, image_size=400, device='cuda')
