@@ -8,8 +8,7 @@ setup(
     license='MIT License',
     packages=['radon_transformation'],
     install_requires=[
-                      'numpy',    
-                      'scikit-image',                 
+                      'numpy',                
                       ],
 
     classifiers=[
