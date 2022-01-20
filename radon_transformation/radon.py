@@ -9,11 +9,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from radon_transformation.filter import rampfilter
 
-# for dataset
-from skimage.data import shepp_logan_phantom
-from skimage.transform.radon_transform import iradon
-from skimage.transform.radon_transform import radon as radon_nm
-
 
 class radon(torch.nn.Module):
     ''' 
@@ -155,39 +150,3 @@ def test_adjoint():
     print("\n<Ax,y>=", leftside,"  -----  <x,A'y>=", rightside)
     print('\n leftside/rightside: ',leftside/rightside)
     return leftside/rightside
-
-
-if __name__=='__main__':
-
-    device = 'cuda'
-
-    # create input
-    fd_reconstruction = torch.tensor(shepp_logan_phantom()).cuda().float() # shape: 400 x 400
-    fd_reconstruction=torch.cat((fd_reconstruction[None,None], fd_reconstruction[None,None]), dim=0)
-
-    # setting
-    image_size = 400
-    n_angles = 1000
-
-    # apply 
-    radon_op, fbp_op = get_operators(n_angles=n_angles, image_size=image_size, circle=True, device=device)
-    sino = radon_op(fd_reconstruction.cuda())
-    reconstructed = fbp_op(sino)
-
-    # plot
-    plt.figure(figsize=(20,10))
-    plt.subplot(131)
-    plt.imshow(fd_reconstruction[0,0].cpu())
-    plt.title("Input")
-    plt.colorbar(fraction=0.046, pad=0.04)
-    plt.subplot(132)
-    plt.imshow(reconstructed.cpu()[0,0])
-    plt.title("Padded")
-    plt.colorbar(fraction=0.046, pad=0.04)
-    plt.subplot(133)
-    plt.imshow(sino[0,0].cpu())
-    plt.title("sino")
-    plt.colorbar(fraction=0.046, pad=0.04)
-    plt.savefig("comparison.png", bbox_inches='tight', pad_inches=0.1)
-
-
