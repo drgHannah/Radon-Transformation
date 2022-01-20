@@ -1,6 +1,5 @@
 import numpy as np
 import torch
-from scipy.fftpack import fft, ifft
 
 
 def rampfilter(size):

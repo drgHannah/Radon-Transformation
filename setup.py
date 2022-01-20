@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='radon_transformation',
-    version='0.1.0',    
+    version='0.1.1',    
     description='Radon Transformation package',
     author='Hannah Droege',
     license='MIT License',
