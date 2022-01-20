@@ -162,15 +162,15 @@ if __name__=='__main__':
     device = 'cuda'
 
     # create input
-    fd_reconstruction = torch.tensor(shepp_logan_phantom()).cuda().float() # Shape: 400 x 400
-    fd_reconstruction=torch.cat((fd_reconstruction[None,None],fd_reconstruction[None,None]),dim=0)
+    fd_reconstruction = torch.tensor(shepp_logan_phantom()).cuda().float() # shape: 400 x 400
+    fd_reconstruction=torch.cat((fd_reconstruction[None,None], fd_reconstruction[None,None]), dim=0)
 
     # setting
     image_size = 400
-    n_angles = 100
+    n_angles = 1000
 
     # apply 
-    radon_op, fbp_op = get_operators(n_angles=n_angles, image_size=image_size, circle=0, device=device)
+    radon_op, fbp_op = get_operators(n_angles=n_angles, image_size=image_size, circle=True, device=device)
     sino = radon_op(fd_reconstruction.cuda())
     reconstructed = fbp_op(sino)
 
@@ -179,15 +179,15 @@ if __name__=='__main__':
     plt.subplot(131)
     plt.imshow(fd_reconstruction[0,0].cpu())
     plt.title("Input")
-    plt.colorbar()
+    plt.colorbar(fraction=0.046, pad=0.04)
     plt.subplot(132)
     plt.imshow(reconstructed.cpu()[0,0])
     plt.title("Padded")
-    plt.colorbar()
+    plt.colorbar(fraction=0.046, pad=0.04)
     plt.subplot(133)
     plt.imshow(sino[0,0].cpu())
     plt.title("sino")
-    plt.colorbar()
-    plt.savefig("comparison.png")
+    plt.colorbar(fraction=0.046, pad=0.04)
+    plt.savefig("comparison.png", bbox_inches='tight', pad_inches=0.1)
 
 
