@@ -9,7 +9,7 @@ A Pytorch implementation of the radon operator and filtered backprojection with,
 ## Install
 - clone repository
 - install pytorch: https://pytorch.org/get-started/locally/
-
+- Install Radon-Transformation: 
 ```
 pip install ./Radon-Transformation/
 ```
